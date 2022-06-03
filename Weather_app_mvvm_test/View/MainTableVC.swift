@@ -27,14 +27,26 @@ class MainTableVC: UITableViewController, CLLocationManagerDelegate {
     
     //MARK: - IBActions
     @IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
-        alertAddCity(name: "Город", placeholder: "Введите название города") { (city) in
+        addCityСontroller()
+    }
+    
+    //MARK: - Flow func
+    
+    func addCityAlert(){
+        alert(name: "Город", placeholder: "Введите название города") { (city) in
             self.listCitiesArray.append(city)
             self.citiesArray.append(self.emptyCity)
             self.addCities()
         }
     }
     
-    //MARK: - Flow func
+    func addCityСontroller(){
+        guard let addCityController = self.storyboard?.instantiateViewController(withIdentifier: "AddCityVC") as? AddCityVC else { return }
+        addCityController.modalTransitionStyle = .crossDissolve
+        addCityController.modalPresentationStyle = .automatic
+        self.navigationController?.pushViewController(addCityController, animated: true)
+    }
+    
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         let location: CLLocationCoordinate2D = manager.location!.coordinate
         print("Location = \(location.latitude) \(location.longitude)")
@@ -67,7 +79,7 @@ class MainTableVC: UITableViewController, CLLocationManagerDelegate {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "ListCell", for: indexPath) as? ListCell else {return UITableViewCell()}
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "MainListCell", for: indexPath) as? MainListCell else {return UITableViewCell()}
         var weather = WeatherMain()
         weather = citiesArray[indexPath.row]
         cell.configurate(weather: weather)
@@ -75,7 +87,6 @@ class MainTableVC: UITableViewController, CLLocationManagerDelegate {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
         guard let indexPath = tableView.indexPathForSelectedRow else { return }
         let cityWeather = citiesArray[indexPath.row]
         guard let controller = self.storyboard?.instantiateViewController(withIdentifier: "DetailedVC") as? DetailedVC else { return }

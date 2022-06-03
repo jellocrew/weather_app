@@ -1,6 +1,6 @@
 import UIKit
 
-class ListCell: UITableViewCell {
+class MainListCell: UITableViewCell {
     
     @IBOutlet weak var nameCityLabel: UILabel!
     @IBOutlet weak var statusCityLabel: UILabel!

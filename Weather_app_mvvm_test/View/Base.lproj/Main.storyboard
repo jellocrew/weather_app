@@ -17,7 +17,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="ListCell" rowHeight="42" id="CKT-Ax-esp" customClass="ListCell" customModule="Weather_app_mvvm_test" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="MainListCell" rowHeight="42" id="CKT-Ax-esp" customClass="MainListCell" customModule="Weather_app_mvvm_test" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="44.5" width="414" height="42"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="CKT-Ax-esp" id="Q1x-gL-ir0">
@@ -99,6 +99,21 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oEI-I7-Lon" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-526" y="98"/>
+        </scene>
+        <!--Add CityVC-->
+        <scene sceneID="CCV-Sf-6hm">
+            <objects>
+                <viewController storyboardIdentifier="AddCityVC" modalTransitionStyle="crossDissolve" id="tTW-6Q-mZ7" customClass="AddCityVC" customModule="Weather_app_mvvm_test" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="lCe-EA-O2q">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="dcR-NH-lFb"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="sVd-sq-ORX" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-526" y="759"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="3Y0-IU-VQh">
