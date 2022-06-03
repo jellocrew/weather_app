@@ -1,7 +1,9 @@
 import UIKit
 import CoreLocation
 
-class MainTableVC: UITableViewController, CLLocationManagerDelegate {
+class MainTableVC: UITableViewController, CLLocationManagerDelegate, AddCityVCDelagate {
+
+    
     
     @IBOutlet weak var mainTableView: UITableView!
     
@@ -18,6 +20,8 @@ class MainTableVC: UITableViewController, CLLocationManagerDelegate {
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.requestAlwaysAuthorization()
         // locationManager.startUpdatingLocation()
+        let addCityVC = AddCityVC()
+        addCityVC.delegate = self
         
         if citiesArray.isEmpty {
             citiesArray = Array(repeating: emptyCity, count: listCitiesArray.count)
@@ -38,6 +42,13 @@ class MainTableVC: UITableViewController, CLLocationManagerDelegate {
             self.citiesArray.append(self.emptyCity)
             self.addCities()
         }
+    }
+    
+    func addCityVC(_ vc: AddCityVC, didSelecLocationWith cityName: String?) {
+        guard let city = cityName else { return }
+        self.listCitiesArray.append(city)
+        self.citiesArray.append(self.emptyCity)
+        self.addCities()
     }
     
     func addCityСontroller(){

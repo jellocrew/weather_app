@@ -2,7 +2,8 @@ import Foundation
 import CoreLocation
 
 struct Location {
-    let title: String
+    let city: String
+    let country: String
     let coordinates: CLLocationCoordinate2D
 }
 
@@ -20,17 +21,19 @@ class LocationManager: NSObject {
             }
             
             let models: [Location] = places.compactMap({ place in
-                var name = ""
+                var cityName = ""
+                var countryName = ""
                 if let city = place.locality {
-                    name += city
+                    cityName = city
                 }
                 if let country = place.country {
-                    name += ", \(country)"
+                    countryName = ", \(country)"
                 }
                 
                 print(place)
                 let result = Location(
-                    title: name,
+                    city: cityName,
+                    country: countryName,
                     coordinates: place.location!.coordinate)
                 return result
             })

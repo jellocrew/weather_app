@@ -1,8 +1,15 @@
 import UIKit
 import MapKit
+import CoreLocation
+
+protocol AddCityVCDelagate: AnyObject {
+    func addCityVC(_ vc: AddCityVC, didSelecLocationWith cityName: String?)
+}
 
 class AddCityVC: UIViewController, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource {
 
+    weak var delegate: AddCityVCDelagate?
+    
 let mapView = MKMapView() // add pin to map
     
     private let field: UITextField = {
@@ -70,7 +77,7 @@ let mapView = MKMapView() // add pin to map
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell",
                                                  for: indexPath)
-        cell.textLabel?.text = locations[indexPath.row].title
+        cell.textLabel?.text = locations[indexPath.row].city
         cell.textLabel?.numberOfLines = 0
         cell.contentView.backgroundColor = .secondarySystemBackground
         cell.backgroundColor = .secondarySystemBackground
@@ -78,9 +85,13 @@ let mapView = MKMapView() // add pin to map
         return cell
     }
 
-    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard let indexPath = tableView.indexPathForSelectedRow else { return }
         tableView.deselectRow(at: indexPath, animated: true)
-        // notify map controller to show pin at selected place
-        
+        let cityName = locations[indexPath.row].city
+        delegate?.addCityVC(self, didSelecLocationWith: cityName)
+        guard let controller = self.storyboard?.instantiateViewController(withIdentifier: "MainTableVC") as? MainTableVC else { return }
+        self.navigationController?.pushViewController(controller, animated: true)
     }
+    
 }
