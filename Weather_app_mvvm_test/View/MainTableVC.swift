@@ -2,8 +2,6 @@ import UIKit
 import CoreLocation
 
 class MainTableVC: UITableViewController, CLLocationManagerDelegate, AddCityVCDelagate {
-
-    
     
     @IBOutlet weak var mainTableView: UITableView!
     
@@ -20,12 +18,11 @@ class MainTableVC: UITableViewController, CLLocationManagerDelegate, AddCityVCDe
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.requestAlwaysAuthorization()
         // locationManager.startUpdatingLocation()
-        let addCityVC = AddCityVC()
-        addCityVC.delegate = self
         
         if citiesArray.isEmpty {
             citiesArray = Array(repeating: emptyCity, count: listCitiesArray.count)
         }
+        
         addCities()
     }
     
@@ -36,15 +33,7 @@ class MainTableVC: UITableViewController, CLLocationManagerDelegate, AddCityVCDe
     
     //MARK: - Flow func
     
-    func addCityAlert(){
-        alert(name: "Город", placeholder: "Введите название города") { (city) in
-            self.listCitiesArray.append(city)
-            self.citiesArray.append(self.emptyCity)
-            self.addCities()
-        }
-    }
-    
-    func addCityVC(_ vc: AddCityVC, didSelecLocationWith cityName: String?) {
+    func addCityVC(_ vc: AddCityVC, didSelectLocationWith cityName: String?) {
         guard let city = cityName else { return }
         self.listCitiesArray.append(city)
         self.citiesArray.append(self.emptyCity)
@@ -56,6 +45,7 @@ class MainTableVC: UITableViewController, CLLocationManagerDelegate, AddCityVCDe
         addCityController.modalTransitionStyle = .crossDissolve
         addCityController.modalPresentationStyle = .automatic
         self.navigationController?.pushViewController(addCityController, animated: true)
+        addCityController.delegate = self
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {

@@ -3,7 +3,7 @@ import MapKit
 import CoreLocation
 
 protocol AddCityVCDelagate: AnyObject {
-    func addCityVC(_ vc: AddCityVC, didSelecLocationWith cityName: String?)
+    func addCityVC(_ vc: AddCityVC, didSelectLocationWith cityName: String?)
 }
 
 class AddCityVC: UIViewController, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource {
@@ -89,9 +89,8 @@ let mapView = MKMapView() // add pin to map
         guard let indexPath = tableView.indexPathForSelectedRow else { return }
         tableView.deselectRow(at: indexPath, animated: true)
         let cityName = locations[indexPath.row].city
-        delegate?.addCityVC(self, didSelecLocationWith: cityName)
-        guard let controller = self.storyboard?.instantiateViewController(withIdentifier: "MainTableVC") as? MainTableVC else { return }
-        self.navigationController?.pushViewController(controller, animated: true)
+        delegate?.addCityVC(self, didSelectLocationWith: cityName)
+        self.navigationController?.popViewController(animated: true)
     }
     
 }
