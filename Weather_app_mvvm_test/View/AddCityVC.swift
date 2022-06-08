@@ -10,8 +10,6 @@ class AddCityVC: UIViewController, UITextFieldDelegate, UITableViewDelegate, UIT
 
     weak var delegate: AddCityVCDelagate?
     
-let mapView = MKMapView() // add pin to map
-    
     private let field: UITextField = {
         let field = UITextField()
         field.placeholder = "Введите название города"
@@ -34,7 +32,6 @@ let mapView = MKMapView() // add pin to map
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        view.addSubview(mapView)
         view.backgroundColor = .secondarySystemBackground
         view.addSubview(field)
         view.addSubview(tableView)
@@ -46,8 +43,8 @@ let mapView = MKMapView() // add pin to map
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        mapView.frame = view.bounds
-        field.frame = CGRect(x: 10, y: 100, width: view.frame.size.width-20, height: 50)
+        let fieldY: CGFloat = 100
+        field.frame = CGRect(x: 10, y: fieldY, width: view.frame.size.width-20, height: 50)
         let tableY: CGFloat = field.frame.origin.y+field.frame.size.height+5
         tableView.frame = CGRect(x: 0,
                                  y: tableY,
@@ -77,7 +74,8 @@ let mapView = MKMapView() // add pin to map
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell",
                                                  for: indexPath)
-        cell.textLabel?.text = locations[indexPath.row].city
+        
+        cell.textLabel?.text = locations[indexPath.row].city + locations[indexPath.row].administrativeArea + locations[indexPath.row].country
         cell.textLabel?.numberOfLines = 0
         cell.contentView.backgroundColor = .secondarySystemBackground
         cell.backgroundColor = .secondarySystemBackground

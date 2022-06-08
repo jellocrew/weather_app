@@ -7,7 +7,7 @@ class APIManager {
     
     func getWeather(latitude: Double, longitude: Double, completion: @escaping (WeatherMain) -> ()) {
         
-        guard let url = URL(string: "http://api.openweathermap.org/data/2.5/weather?lat=\(latitude)&lon=\(longitude)&appid=\(apiKey)&units=metric") else { return }
+        guard let url = URL(string: "http://api.openweathermap.org/data/2.5/weather?lat=\(latitude)&lon=\(longitude)&lang=\(lang)&appid=\(apiKey)&units=metric") else { return }
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
         

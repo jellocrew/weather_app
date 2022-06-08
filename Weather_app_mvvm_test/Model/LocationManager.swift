@@ -4,6 +4,7 @@ import CoreLocation
 struct Location {
     let city: String
     let country: String
+    let administrativeArea: String
     let coordinates: CLLocationCoordinate2D
 }
 
@@ -23,17 +24,23 @@ class LocationManager: NSObject {
             let models: [Location] = places.compactMap({ place in
                 var cityName = ""
                 var countryName = ""
-                if let city = place.locality {
+                var adminAreaName = ""
+                print(place)
+
+                if let city = place.name {
                     cityName = city
                 }
                 if let country = place.country {
                     countryName = ", \(country)"
                 }
+                if let area = place.administrativeArea {
+                    adminAreaName = ", \(area)"
+                }
                 
-                print(place)
                 let result = Location(
                     city: cityName,
                     country: countryName,
+                    administrativeArea: adminAreaName,
                     coordinates: place.location!.coordinate)
                 return result
             })
@@ -41,3 +48,4 @@ class LocationManager: NSObject {
         }
     }
 }
+

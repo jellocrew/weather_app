@@ -95,6 +95,19 @@ class MainTableVC: UITableViewController, CLLocationManagerDelegate, AddCityVCDe
         controller.weatherModel = cityWeather
     }
     
+    override func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let cityWeather = citiesArray[indexPath.row]
+        let sharedAction = UIContextualAction(style: .normal, title: "Share") { [weak self] _, _, completion in
+            let activityController = UIActivityViewController(activityItems: [cityWeather.name, cityWeather.temperatureString, cityWeather.weatherDescription],
+                                                              applicationActivities: nil)
+            self?.present(activityController, animated: true)
+            completion(true)
+        }
+        sharedAction.image = UIImage(systemName: "square.and.arrow.up")
+        sharedAction.backgroundColor = .systemBlue
+        return UISwipeActionsConfiguration(actions: [sharedAction])
+    }
+    
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             self.citiesArray.remove(at: indexPath.row)
