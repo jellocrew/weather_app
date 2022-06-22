@@ -1,27 +1,16 @@
 import UIKit
 import CoreLocation
+import MapKit
 
 protocol AddCityVCDelagate: AnyObject {
     func addCityVC(_ vc: AddCityVC, didSelectLocationWith cityName: String?)
 }
 
-class AddCityVC: UIViewController, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource {
+class AddCityVC: UIViewController, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, MKLocalSearchCompleterDelegate {
     
     weak var delegate: AddCityVCDelagate?
-    
-    private let field: UITextField = {
-        let field = UITextField()
-        field.placeholder = "Введите название города"
-        field.layer.cornerRadius = 9
-        field.backgroundColor = .tertiarySystemBackground
-        field.leftView = UIView (frame: CGRect(x: 0, y: 0, width: 10, height: 50))
-        field.leftViewMode = .always
-        field.translatesAutoresizingMaskIntoConstraints = false
-        return field
-    }()
-    
-    
-    private let tableView: UITableView = {
+     
+    private let searchResultsTable: UITableView = {
         let table = UITableView()
         table.register(UITableViewCell.self,
                        forCellReuseIdentifier: "cell")
@@ -29,64 +18,77 @@ class AddCityVC: UIViewController, UITextFieldDelegate, UITableViewDelegate, UIT
         return table
     }()
     
+    private let searchBar: UISearchBar = {
+        let searchBar = UISearchBar()
+        searchBar.placeholder = " Введите название города"
+        searchBar.sizeToFit()
+        searchBar.isTranslucent = false
+        return searchBar
+    }()
+    
     var locations = [Location]()
+    var searchCompleter = MKLocalSearchCompleter()
+    var searchResults = [MKLocalSearchCompletion]()
+
+
     let fieldheight: CGFloat = 50
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .secondarySystemBackground
         
-        view.addSubview(field)
-        field.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 10.0).isActive = true
-        field.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20.0).isActive = true
-        field.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20.0).isActive = true
-        field.heightAnchor.constraint(equalToConstant: fieldheight).isActive = true
+        view.addSubview(searchBar)
+         
+        view.addSubview(searchResultsTable)
+        searchResultsTable.topAnchor.constraint(equalTo: searchBar.bottomAnchor, constant: 5.0).isActive = true
+        searchResultsTable.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20.0).isActive = true
+        searchResultsTable.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20.0).isActive = true
+        searchResultsTable.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 10.0).isActive = true
         
-        view.addSubview(tableView)
-        tableView.topAnchor.constraint(equalTo: field.bottomAnchor, constant: 5.0).isActive = true
-        tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20.0).isActive = true
-        tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -30.0).isActive = true
-        tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 10.0).isActive = true
-        
-        field.delegate = self
-        tableView.delegate = self
-        tableView.dataSource = self
-        tableView.backgroundColor = .secondarySystemBackground
+        searchCompleter.delegate = self
+        searchBar.delegate = self
+        searchResultsTable.delegate = self
+        searchResultsTable.dataSource = self
+        searchResultsTable.backgroundColor = .secondarySystemBackground
+    }
+
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        searchCompleter.queryFragment = searchText
+    }
+
+    func completerDidUpdateResults(_ completer: MKLocalSearchCompleter) {
+
+        searchResults = completer.results
+
+        searchResultsTable.reloadData()
     }
     
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        field.resignFirstResponder()
-        if let text = field.text, !text.isEmpty {
-            LocationManager.shared.findLocations(with: text) { [weak self] locations in
-                DispatchQueue.main.async {
-                    self?.locations = locations
-                    self?.tableView.reloadData()
-                }
-            }
-        }
-        return true
+    func completer(_ completer: MKLocalSearchCompleter, didFailWithError error: Error) {
+        // Error
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return locations.count
+        return searchResults.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell",
-                                                 for: indexPath)
-        
-        cell.textLabel?.text = locations[indexPath.row].city + locations[indexPath.row].administrativeArea + locations[indexPath.row].country
-        cell.textLabel?.numberOfLines = 0
+
+
+        let searchResult = searchResults[indexPath.row]
+        let cell = UITableViewCell(style: .subtitle, reuseIdentifier: nil)
         cell.contentView.backgroundColor = .secondarySystemBackground
         cell.backgroundColor = .secondarySystemBackground
-        
+        cell.textLabel?.text = searchResult.title
+        cell.detailTextLabel?.text = searchResult.subtitle
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let indexPath = tableView.indexPathForSelectedRow else { return }
         tableView.deselectRow(at: indexPath, animated: true)
-        let cityName = locations[indexPath.row].city
+        
+        let cityName = searchResults[indexPath.row].title
+        print(cityName)
         delegate?.addCityVC(self, didSelectLocationWith: cityName)
         self.dismiss(animated: true, completion: nil)
     }
