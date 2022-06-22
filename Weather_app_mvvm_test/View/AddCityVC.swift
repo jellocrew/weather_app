@@ -1,5 +1,4 @@
 import UIKit
-import MapKit
 import CoreLocation
 
 protocol AddCityVCDelagate: AnyObject {
@@ -7,7 +6,7 @@ protocol AddCityVCDelagate: AnyObject {
 }
 
 class AddCityVC: UIViewController, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource {
-
+    
     weak var delegate: AddCityVCDelagate?
     
     private let field: UITextField = {
@@ -17,6 +16,7 @@ class AddCityVC: UIViewController, UITextFieldDelegate, UITableViewDelegate, UIT
         field.backgroundColor = .tertiarySystemBackground
         field.leftView = UIView (frame: CGRect(x: 0, y: 0, width: 10, height: 50))
         field.leftViewMode = .always
+        field.translatesAutoresizingMaskIntoConstraints = false
         return field
     }()
     
@@ -25,31 +25,33 @@ class AddCityVC: UIViewController, UITextFieldDelegate, UITableViewDelegate, UIT
         let table = UITableView()
         table.register(UITableViewCell.self,
                        forCellReuseIdentifier: "cell")
+        table.translatesAutoresizingMaskIntoConstraints = false
         return table
     }()
     
     var locations = [Location]()
+    let fieldheight: CGFloat = 50
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .secondarySystemBackground
+        
         view.addSubview(field)
+        field.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 10.0).isActive = true
+        field.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20.0).isActive = true
+        field.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20.0).isActive = true
+        field.heightAnchor.constraint(equalToConstant: fieldheight).isActive = true
+        
         view.addSubview(tableView)
+        tableView.topAnchor.constraint(equalTo: field.bottomAnchor, constant: 5.0).isActive = true
+        tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20.0).isActive = true
+        tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -30.0).isActive = true
+        tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 10.0).isActive = true
+        
         field.delegate = self
         tableView.delegate = self
         tableView.dataSource = self
         tableView.backgroundColor = .secondarySystemBackground
-            }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        let fieldY: CGFloat = 100
-        field.frame = CGRect(x: 10, y: fieldY, width: view.frame.size.width-20, height: 50)
-        let tableY: CGFloat = field.frame.origin.y+field.frame.size.height+5
-        tableView.frame = CGRect(x: 0,
-                                 y: tableY,
-                                 width: view.frame.size.width,
-                                 height: view.frame.size.height-tableY)
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -61,7 +63,6 @@ class AddCityVC: UIViewController, UITextFieldDelegate, UITableViewDelegate, UIT
                     self?.tableView.reloadData()
                 }
             }
-
         }
         return true
     }
@@ -69,7 +70,6 @@ class AddCityVC: UIViewController, UITextFieldDelegate, UITableViewDelegate, UIT
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return locations.count
     }
-    
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell",
@@ -79,16 +79,15 @@ class AddCityVC: UIViewController, UITextFieldDelegate, UITableViewDelegate, UIT
         cell.textLabel?.numberOfLines = 0
         cell.contentView.backgroundColor = .secondarySystemBackground
         cell.backgroundColor = .secondarySystemBackground
-
+        
         return cell
     }
-
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let indexPath = tableView.indexPathForSelectedRow else { return }
         tableView.deselectRow(at: indexPath, animated: true)
         let cityName = locations[indexPath.row].city
         delegate?.addCityVC(self, didSelectLocationWith: cityName)
-        self.navigationController?.popViewController(animated: true)
+        self.dismiss(animated: true, completion: nil)
     }
-    
 }

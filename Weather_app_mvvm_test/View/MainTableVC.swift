@@ -42,9 +42,9 @@ class MainTableVC: UITableViewController, CLLocationManagerDelegate, AddCityVCDe
     
     func addCityСontroller(){
         guard let addCityController = self.storyboard?.instantiateViewController(withIdentifier: "AddCityVC") as? AddCityVC else { return }
-        addCityController.modalTransitionStyle = .crossDissolve
+        addCityController.modalTransitionStyle = .coverVertical
         addCityController.modalPresentationStyle = .automatic
-        self.navigationController?.pushViewController(addCityController, animated: true)
+        self.present(addCityController, animated: true, completion: nil)
         addCityController.delegate = self
     }
     
