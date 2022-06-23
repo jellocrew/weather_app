@@ -6,6 +6,9 @@ class MainTableVC: UITableViewController, CLLocationManagerDelegate, AddCityVCDe
     @IBOutlet weak var mainTableView: UITableView!
     
     //MARK: - let/var
+    var textColor: UIColor?
+    var backgroundColor = UIColor(red: 35.0/255.0, green: 132.0/255.0, blue: 165.0/255.0, alpha: 1.0)
+    let store = CitiesStore()
     let emptyCity = WeatherMain()
     var citiesArray = [WeatherMain]()
     var listCitiesArray: [String] = []
@@ -13,11 +16,14 @@ class MainTableVC: UITableViewController, CLLocationManagerDelegate, AddCityVCDe
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        loadCities()
+        updateBackgroundColor()
+        view.backgroundColor = backgroundColor
+        tableView.backgroundColor = backgroundColor
+        listCitiesArray = store.loadCities()
+        
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.requestAlwaysAuthorization()
-        // locationManager.startUpdatingLocation()
         
         if citiesArray.isEmpty {
             citiesArray = Array(repeating: emptyCity, count: listCitiesArray.count)
@@ -41,11 +47,11 @@ class MainTableVC: UITableViewController, CLLocationManagerDelegate, AddCityVCDe
     }
     
     func addCityСontroller(){
-        guard let addCityController = self.storyboard?.instantiateViewController(withIdentifier: "AddCityVC") as? AddCityVC else { return }
-        addCityController.modalTransitionStyle = .coverVertical
-        addCityController.modalPresentationStyle = .automatic
-        self.present(addCityController, animated: true, completion: nil)
-        addCityController.delegate = self
+        let controller = AddCityVC(nibName: nil, bundle: nil)
+        controller.modalTransitionStyle = .coverVertical
+        controller.modalPresentationStyle = .automatic
+        self.present(controller, animated: true, completion: nil)
+        controller.delegate = self
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
@@ -57,21 +63,42 @@ class MainTableVC: UITableViewController, CLLocationManagerDelegate, AddCityVCDe
         getCityWeather(citiesArray: self.listCitiesArray) { index, weather in
             self.citiesArray[index] = weather
             self.citiesArray[index].name = self.listCitiesArray[index]
-            self.saveCities()
+            self.store.saveCities(listCitiesArray: self.listCitiesArray)
             DispatchQueue.main.async {
                 self.tableView.reloadData()
             }
         }
     }
     
-    func saveCities() {
-        let defaults = UserDefaults.standard
-        defaults.set(listCitiesArray, forKey: "listCitiesArray")
-    }
-    
-    func loadCities() {
-        guard  let defaults = UserDefaults.standard.value(forKey: "listCitiesArray") as? Array<String> else {return}
-        self.listCitiesArray = defaults
+    func updateBackgroundColor(){
+        let time = NSDate()
+        let formatter = DateFormatter()
+        formatter.dateFormat = "HH"
+        formatter.timeZone = TimeZone.current
+        let formatteddate = formatter.string(from: time as Date)
+        
+        let dayTime: Int? = Int(formatteddate)
+        if let hourNumber = dayTime{
+            // утро
+            if hourNumber > 6 && hourNumber < 9 || hourNumber == 9{
+                self.backgroundColor = UIColor(red: 35.0/255.0, green: 132.0/255.0, blue: 165.0/255.0, alpha: 1.0)
+                textColor = .white.withAlphaComponent(0.7)
+            }
+            // день
+            if hourNumber > 9 && hourNumber < 18 || hourNumber == 18{
+                self.backgroundColor = UIColor(red: 89.0/255.0, green: 201.0/255.0, blue: 234.0/255.0, alpha: 1.0)
+            }
+            // вечер
+            if hourNumber > 18 && hourNumber < 21 || hourNumber == 21{
+                self.backgroundColor = UIColor(red: 35.0/255.0, green: 132.0/255.0, blue: 165.0/255.0, alpha: 1.0)
+                textColor = .white.withAlphaComponent(0.7)
+            }
+            // ночь
+            if hourNumber > 21 && hourNumber < 24 || hourNumber == 24 || hourNumber < 6{
+                self.backgroundColor = UIColor(red: 35.0/255.0, green: 132.0/255.0, blue: 165.0/255.0, alpha: 1.0)
+                textColor = .white.withAlphaComponent(0.7)
+            }
+        }
     }
     
     
@@ -84,6 +111,8 @@ class MainTableVC: UITableViewController, CLLocationManagerDelegate, AddCityVCDe
         var weather = WeatherMain()
         weather = citiesArray[indexPath.row]
         cell.configurate(weather: weather)
+        cell.contentView.backgroundColor = self.backgroundColor
+        cell.backgroundColor = self.backgroundColor
         return cell
     }
     
@@ -113,7 +142,7 @@ class MainTableVC: UITableViewController, CLLocationManagerDelegate, AddCityVCDe
             self.citiesArray.remove(at: indexPath.row)
             self.listCitiesArray.remove(at: indexPath.row)
             self.tableView.deleteRows(at: [indexPath], with: .automatic)
-            saveCities()
+            self.store.saveCities(listCitiesArray: self.listCitiesArray)
         }
     }
 }

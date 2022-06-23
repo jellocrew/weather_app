@@ -100,21 +100,6 @@
             </objects>
             <point key="canvasLocation" x="-526" y="98"/>
         </scene>
-        <!--Add CityVC-->
-        <scene sceneID="CCV-Sf-6hm">
-            <objects>
-                <viewController storyboardIdentifier="AddCityVC" modalTransitionStyle="crossDissolve" id="tTW-6Q-mZ7" customClass="AddCityVC" customModule="Weather_app_mvvm_test" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="lCe-EA-O2q">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <viewLayoutGuide key="safeArea" id="dcR-NH-lFb"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="sVd-sq-ORX" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-526" y="759"/>
-        </scene>
         <!--Navigation Controller-->
         <scene sceneID="3Y0-IU-VQh">
             <objects>
@@ -253,6 +238,7 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Odz-1c-d06" secondAttribute="trailing" symbolic="YES" id="2Bo-Z6-caB"/>
                             <constraint firstItem="sfJ-yd-54L" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="50" id="DEe-yI-fhI"/>
                             <constraint firstItem="AXI-8l-LVx" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="EpF-k6-Twh"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="sfJ-yd-54L" secondAttribute="trailing" constant="50" id="HxO-nQ-myK"/>

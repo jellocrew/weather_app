@@ -64,7 +64,7 @@ class AddCityVC: UIViewController, UITextFieldDelegate, UITableViewDelegate, UIT
     }
     
     func completer(_ completer: MKLocalSearchCompleter, didFailWithError error: Error) {
-        // Error
+        print(error.localizedDescription)
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -72,7 +72,6 @@ class AddCityVC: UIViewController, UITextFieldDelegate, UITableViewDelegate, UIT
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-
 
         let searchResult = searchResults[indexPath.row]
         let cell = UITableViewCell(style: .subtitle, reuseIdentifier: nil)
@@ -88,7 +87,6 @@ class AddCityVC: UIViewController, UITextFieldDelegate, UITableViewDelegate, UIT
         tableView.deselectRow(at: indexPath, animated: true)
         
         let cityName = searchResults[indexPath.row].title
-        print(cityName)
         delegate?.addCityVC(self, didSelectLocationWith: cityName)
         self.dismiss(animated: true, completion: nil)
     }
