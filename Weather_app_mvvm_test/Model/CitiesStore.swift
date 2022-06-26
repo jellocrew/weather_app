@@ -2,15 +2,13 @@ import UIKit
 
 class CitiesStore {
     private let userDefaults = UserDefaults.standard
+    private let listCitiesArrayKey = "listCitiesArray"
     
     func saveCities(listCitiesArray: [String]) {
-        userDefaults.set(listCitiesArray, forKey: "listCitiesArray")
+        userDefaults.set(listCitiesArray, forKey: listCitiesArrayKey)
     }
     
-    func loadCities() -> Array<String> {
-        var listCitiesArray: [String] = []
-        guard  let defaults = userDefaults.value(forKey: "listCitiesArray") as? Array<String> else {return []}
-        listCitiesArray = defaults
-        return listCitiesArray
+    @objc func loadCities() -> [String] {
+        return userDefaults.stringArray(forKey: listCitiesArrayKey) ?? []
     }
 }

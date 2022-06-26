@@ -2,14 +2,15 @@ import UIKit
 import CoreLocation
 import MapKit
 
-protocol AddCityVCDelagate: AnyObject {
-    func addCityVC(_ vc: AddCityVC, didSelectLocationWith cityName: String?)
-}
-
-class AddCityVC: UIViewController, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, MKLocalSearchCompleterDelegate {
+class AddCityVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, MKLocalSearchCompleterDelegate {
     
-    weak var delegate: AddCityVCDelagate?
-     
+    //MARK: - let/var
+    let store = CitiesStore()
+    var onReturn: (() -> Void)?
+    var locations = [Location]()
+    var searchCompleter = MKLocalSearchCompleter()
+    var searchResults = [MKLocalSearchCompletion]()
+    
     private let searchResultsTable: UITableView = {
         let table = UITableView()
         table.register(UITableViewCell.self,
@@ -25,20 +26,10 @@ class AddCityVC: UIViewController, UITextFieldDelegate, UITableViewDelegate, UIT
         searchBar.isTranslucent = false
         return searchBar
     }()
-    
-    var locations = [Location]()
-    var searchCompleter = MKLocalSearchCompleter()
-    var searchResults = [MKLocalSearchCompletion]()
-
-
-    let fieldheight: CGFloat = 50
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .secondarySystemBackground
-        
         view.addSubview(searchBar)
-         
         view.addSubview(searchResultsTable)
         searchResultsTable.topAnchor.constraint(equalTo: searchBar.bottomAnchor, constant: 5.0).isActive = true
         searchResultsTable.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20.0).isActive = true
@@ -51,15 +42,14 @@ class AddCityVC: UIViewController, UITextFieldDelegate, UITableViewDelegate, UIT
         searchResultsTable.dataSource = self
         searchResultsTable.backgroundColor = .secondarySystemBackground
     }
-
+    
+    //MARK: - Flow func
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         searchCompleter.queryFragment = searchText
     }
-
+    
     func completerDidUpdateResults(_ completer: MKLocalSearchCompleter) {
-
         searchResults = completer.results
-
         searchResultsTable.reloadData()
     }
     
@@ -72,7 +62,7 @@ class AddCityVC: UIViewController, UITextFieldDelegate, UITableViewDelegate, UIT
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-
+        
         let searchResult = searchResults[indexPath.row]
         let cell = UITableViewCell(style: .subtitle, reuseIdentifier: nil)
         cell.contentView.backgroundColor = .secondarySystemBackground
@@ -85,9 +75,11 @@ class AddCityVC: UIViewController, UITextFieldDelegate, UITableViewDelegate, UIT
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let indexPath = tableView.indexPathForSelectedRow else { return }
         tableView.deselectRow(at: indexPath, animated: true)
-        
         let cityName = searchResults[indexPath.row].title
-        delegate?.addCityVC(self, didSelectLocationWith: cityName)
-        self.dismiss(animated: true, completion: nil)
+        var listCitiesArray = store.loadCities()
+        listCitiesArray.append(cityName)
+        store.saveCities(listCitiesArray: listCitiesArray)
+        NotificationCenter.default.post(name: .userDefaultsIsUpdate, object: nil, userInfo: nil)
+        onReturn?()
     }
 }

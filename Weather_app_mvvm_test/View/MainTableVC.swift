@@ -1,26 +1,30 @@
 import UIKit
 import CoreLocation
 
-class MainTableVC: UITableViewController, CLLocationManagerDelegate, AddCityVCDelagate {
+class MainTableVC: UITableViewController, CLLocationManagerDelegate {
     
     @IBOutlet weak var mainTableView: UITableView!
     
     //MARK: - let/var
     var textColor: UIColor?
-    var backgroundColor = UIColor(red: 35.0/255.0, green: 132.0/255.0, blue: 165.0/255.0, alpha: 1.0)
+    var backgroundColor: UIColor?
     let store = CitiesStore()
     let emptyCity = WeatherMain()
     var citiesArray = [WeatherMain]()
     var listCitiesArray: [String] = []
     let locationManager = CLLocationManager()
+    let partsOfDay = GetPartOfDay()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        updateBackgroundColor()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(cityListUpdater), name: .userDefaultsIsUpdate, object: nil)
+        partsOfDay.updateBackgroundColor()
+        backgroundColor = partsOfDay.backgroundColor
+        textColor = partsOfDay.textColor
         view.backgroundColor = backgroundColor
         tableView.backgroundColor = backgroundColor
         listCitiesArray = store.loadCities()
-        
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.requestAlwaysAuthorization()
@@ -28,8 +32,11 @@ class MainTableVC: UITableViewController, CLLocationManagerDelegate, AddCityVCDe
         if citiesArray.isEmpty {
             citiesArray = Array(repeating: emptyCity, count: listCitiesArray.count)
         }
-        
         addCities()
+    }
+    
+    deinit{
+        NotificationCenter.default.removeObserver(self)
     }
     
     //MARK: - IBActions
@@ -38,20 +45,20 @@ class MainTableVC: UITableViewController, CLLocationManagerDelegate, AddCityVCDe
     }
     
     //MARK: - Flow func
-    
-    func addCityVC(_ vc: AddCityVC, didSelectLocationWith cityName: String?) {
-        guard let city = cityName else { return }
-        self.listCitiesArray.append(city)
+    @objc func cityListUpdater(){
+        self.listCitiesArray = store.loadCities()
         self.citiesArray.append(self.emptyCity)
         self.addCities()
     }
     
     func addCityСontroller(){
         let controller = AddCityVC(nibName: nil, bundle: nil)
+        controller.onReturn = {[weak self] in
+            self?.dismiss(animated: true, completion: nil)
+        }
         controller.modalTransitionStyle = .coverVertical
         controller.modalPresentationStyle = .automatic
         self.present(controller, animated: true, completion: nil)
-        controller.delegate = self
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
@@ -70,38 +77,6 @@ class MainTableVC: UITableViewController, CLLocationManagerDelegate, AddCityVCDe
         }
     }
     
-    func updateBackgroundColor(){
-        let time = NSDate()
-        let formatter = DateFormatter()
-        formatter.dateFormat = "HH"
-        formatter.timeZone = TimeZone.current
-        let formatteddate = formatter.string(from: time as Date)
-        
-        let dayTime: Int? = Int(formatteddate)
-        if let hourNumber = dayTime{
-            // утро
-            if hourNumber > 6 && hourNumber < 9 || hourNumber == 9{
-                self.backgroundColor = UIColor(red: 35.0/255.0, green: 132.0/255.0, blue: 165.0/255.0, alpha: 1.0)
-                textColor = .white.withAlphaComponent(0.7)
-            }
-            // день
-            if hourNumber > 9 && hourNumber < 18 || hourNumber == 18{
-                self.backgroundColor = UIColor(red: 89.0/255.0, green: 201.0/255.0, blue: 234.0/255.0, alpha: 1.0)
-            }
-            // вечер
-            if hourNumber > 18 && hourNumber < 21 || hourNumber == 21{
-                self.backgroundColor = UIColor(red: 35.0/255.0, green: 132.0/255.0, blue: 165.0/255.0, alpha: 1.0)
-                textColor = .white.withAlphaComponent(0.7)
-            }
-            // ночь
-            if hourNumber > 21 && hourNumber < 24 || hourNumber == 24 || hourNumber < 6{
-                self.backgroundColor = UIColor(red: 35.0/255.0, green: 132.0/255.0, blue: 165.0/255.0, alpha: 1.0)
-                textColor = .white.withAlphaComponent(0.7)
-            }
-        }
-    }
-    
-    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return citiesArray.count
     }
@@ -113,6 +88,10 @@ class MainTableVC: UITableViewController, CLLocationManagerDelegate, AddCityVCDe
         cell.configurate(weather: weather)
         cell.contentView.backgroundColor = self.backgroundColor
         cell.backgroundColor = self.backgroundColor
+        cell.nameCityLabel.textColor = textColor
+        cell.statusCityLabel.textColor = textColor
+        cell.tempCityLabel.textColor = textColor
+        cell.tempLabelCityLabel.textColor = textColor
         return cell
     }
     

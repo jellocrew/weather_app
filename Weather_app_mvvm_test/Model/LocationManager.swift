@@ -1,3 +1,5 @@
+// добавлял город в начале через textfield переписал на searchCompleter
+
 import Foundation
 import CoreLocation
 

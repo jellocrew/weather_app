@@ -77,6 +77,7 @@
                                     <outlet property="nameCityLabel" destination="VhV-lC-Yjm" id="VGs-eh-Wij"/>
                                     <outlet property="statusCityLabel" destination="0nB-BS-hxW" id="VnM-kZ-kKH"/>
                                     <outlet property="tempCityLabel" destination="PUH-ke-h1X" id="LZB-dl-KQW"/>
+                                    <outlet property="tempLabelCityLabel" destination="MET-3o-bde" id="ZZS-mR-1cf"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
