@@ -28,23 +28,18 @@ class GetPartOfDay: UIViewController {
         if dayTime >= 21 && dayTime < 24 || hour < 6 { return .night }
         return .day
     }
-
+    
     func updateBackgroundColor(){
         switch getPartOfDay(fromHour: getDayTime() ) {
-    case .morning: self.backgroundColor = UIColor(red: 60.0/255.0, green: 132.0/255.0, blue: 165.0/255.0, alpha: 1.0)
+        case .morning: self.backgroundColor = UIColor(red: 60.0/255.0, green: 132.0/255.0, blue: 165.0/255.0, alpha: 1.0)
             textColor = .white.withAlphaComponent(0.7)
-            print("morning")
-    case .day: self.backgroundColor = UIColor(red: 89.0/255.0, green: 201.0/255.0, blue: 234.0/255.0, alpha: 1.0)
-            print("day")
-    case .evening: self.backgroundColor = UIColor(red: 105.0/255.0, green: 132.0/255.0, blue: 165.0/255.0, alpha: 1.0)
+        case .day: self.backgroundColor = UIColor(red: 89.0/255.0, green: 201.0/255.0, blue: 234.0/255.0, alpha: 1.0)
+        case .evening: self.backgroundColor = UIColor(red: 105.0/255.0, green: 132.0/255.0, blue: 165.0/255.0, alpha: 1.0)
             textColor = .white.withAlphaComponent(0.7)
-            print("evening")
-
-    case .night: self.backgroundColor = UIColor(red: 35.0/255.0, green: 32.0/255.0, blue: 65.0/255.0, alpha: 1.0)
+        case .night: self.backgroundColor = UIColor(red: 35.0/255.0, green: 62.0/255.0, blue: 95.0/255.0, alpha: 1.0)
             textColor = .white.withAlphaComponent(0.7)
-            print("night")
-
-    }
+            
+        }
     }
     
     
