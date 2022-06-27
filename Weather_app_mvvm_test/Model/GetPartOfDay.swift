@@ -34,11 +34,11 @@ class GetPartOfDay: UIViewController {
         case .morning: self.backgroundColor = UIColor(red: 60.0/255.0, green: 132.0/255.0, blue: 165.0/255.0, alpha: 1.0)
             textColor = .white.withAlphaComponent(0.7)
         case .day: self.backgroundColor = UIColor(red: 89.0/255.0, green: 201.0/255.0, blue: 234.0/255.0, alpha: 1.0)
+            textColor = .black
         case .evening: self.backgroundColor = UIColor(red: 105.0/255.0, green: 132.0/255.0, blue: 165.0/255.0, alpha: 1.0)
             textColor = .white.withAlphaComponent(0.7)
         case .night: self.backgroundColor = UIColor(red: 35.0/255.0, green: 62.0/255.0, blue: 95.0/255.0, alpha: 1.0)
             textColor = .white.withAlphaComponent(0.7)
-            
         }
     }
     

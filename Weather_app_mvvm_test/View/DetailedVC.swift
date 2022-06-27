@@ -2,8 +2,7 @@ import UIKit
 
 class DetailedVC: UIViewController {
     
-    @IBOutlet weak var presurreLabel: UILabel!
-    @IBOutlet weak var windSpeedLabel: UILabel!
+    
     
     //MARK: - let/var
     var textColor: UIColor?
@@ -11,7 +10,7 @@ class DetailedVC: UIViewController {
     var cityName = "City"
     let partsOfDay = GetPartOfDay()
     var weatherModel: WeatherMain?
-
+    
     var tempLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -68,7 +67,7 @@ class DetailedVC: UIViewController {
         self.view.addSubview(stackView)
         self.view.addSubview(stateLabel)
         self.view.addSubview(feelslikeLabel)
-
+        
         stackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20.0).isActive = true
         stackView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         stateLabel.topAnchor.constraint(equalTo: stackView.bottomAnchor, constant: 0.0).isActive = true
@@ -76,25 +75,9 @@ class DetailedVC: UIViewController {
         feelslikeLabel.topAnchor.constraint(equalTo: stateLabel.bottomAnchor, constant: 0.0).isActive = true
         feelslikeLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         
-
-        
-//        tempLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20.0).isActive = true
-//        tempLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-//        weatherIconsView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20.0).isActive = true
-//        weatherIconsView.leadingAnchor.constraint(equalTo: tempLabel.trailingAnchor, constant: 5.0).isActive = true
-//        weatherIconsView.centerYAnchor.constraint(equalTo: tempLabel.centerYAnchor).isActive = true
-
-
-        
-        //        tempLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20.0).isActive = true
-        //        tempLabel.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20.0).isActive = true
-        //        tempLabel.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 10.0).isActive = true
-        //        tempLabel.widthAnchor.constraint(equalToConstant:  50).isActive = true
-        //        tempLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-        
         refreshLabel()
         self.title = cityName
-        self.navigationController!.navigationBar.titleTextAttributes = [.foregroundColor: textColor as Any]
+        self.navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: textColor ?? .black]
     }
     
     func refreshLabel(){
@@ -106,10 +89,8 @@ class DetailedVC: UIViewController {
         stateLabel.text = weatherModel?.weatherDescription
         
         tempLabel.text = "\(weatherModel?.temperatureString ?? "Temp")º"
-        
         feelslikeLabel.text = "Ощущается как: \(weatherModel?.feelslikeString ?? "Temp")º"
-        presurreLabel.text = weatherModel?.pressureString
-        windSpeedLabel.text = weatherModel?.windSpeedString
+        
     }
 }
 
