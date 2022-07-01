@@ -2,14 +2,23 @@ import UIKit
 
 class DetailedVC: UIViewController {
     
-    
-    
     //MARK: - let/var
+    
     var textColor: UIColor?
     var backgroundColor: UIColor?
     var cityName = "City"
     let partsOfDay = GetPartOfDay()
     var weatherModel: WeatherMain?
+    let topMargin = 30.0
+    
+    private var collectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+        let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        cv.translatesAutoresizingMaskIntoConstraints = false
+        cv.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "cell")
+        return cv
+    }()
     
     var tempLabel: UILabel = {
         let label = UILabel()
@@ -40,7 +49,7 @@ class DetailedVC: UIViewController {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "State"
-        label.font = UIFont.systemFont(ofSize: 20)
+        label.font = UIFont.systemFont(ofSize: 17)
         return label
     }()
     
@@ -48,7 +57,7 @@ class DetailedVC: UIViewController {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "State"
-        label.font = UIFont.systemFont(ofSize: 15)
+        label.font = UIFont.systemFont(ofSize: 12)
         return label
     }()
     
@@ -62,18 +71,34 @@ class DetailedVC: UIViewController {
         tempLabel.textColor = textColor
         stateLabel.textColor = textColor
         feelslikeLabel.textColor = textColor
+        collectionView.backgroundColor = backgroundColor
+
         stackView.addArrangedSubview(tempLabel)
         stackView.addArrangedSubview(weatherIconsView)
         self.view.addSubview(stackView)
         self.view.addSubview(stateLabel)
         self.view.addSubview(feelslikeLabel)
-        
-        stackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20.0).isActive = true
+        self.view.addSubview(collectionView)
+
+        weatherIconsView.heightAnchor.constraint(equalTo: tempLabel.heightAnchor, multiplier: 1).isActive = true
+        weatherIconsView.widthAnchor.constraint(equalTo: weatherIconsView.heightAnchor, multiplier: 1).isActive = true
+        stackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: topMargin).isActive = true
         stackView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        stateLabel.topAnchor.constraint(equalTo: stackView.bottomAnchor, constant: 0.0).isActive = true
+        stackView.heightAnchor.constraint(equalToConstant: 50).isActive = true
+
+        stateLabel.topAnchor.constraint(equalTo: stackView.bottomAnchor, constant: 10.0).isActive = true
         stateLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        feelslikeLabel.topAnchor.constraint(equalTo: stateLabel.bottomAnchor, constant: 0.0).isActive = true
+        
+        feelslikeLabel.topAnchor.constraint(equalTo: stateLabel.bottomAnchor, constant: 5.0).isActive = true
         feelslikeLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        
+        collectionView.topAnchor.constraint(equalTo: feelslikeLabel.bottomAnchor, constant: topMargin).isActive = true
+        collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10.0).isActive = true
+        collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10.0).isActive = true
+        collectionView.heightAnchor.constraint(equalTo: collectionView.widthAnchor, multiplier: 0.3).isActive = true
+
+        collectionView.delegate = self
+        collectionView.dataSource = self
         
         refreshLabel()
         self.title = cityName
@@ -94,6 +119,10 @@ class DetailedVC: UIViewController {
     }
 }
 
+
+
+
+
 extension UIImageView {
     func loadImge(withUrl url: URL) {
         DispatchQueue.global().async { [weak self] in
@@ -108,4 +137,23 @@ extension UIImageView {
     }
 }
 
+extension DetailedVC: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: collectionView.frame.width/7, height: collectionView.frame.height)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 20
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)
+        cell.backgroundColor = .systemBlue
+        
+        return cell
+    }
+    
+    
+}
 

@@ -37,6 +37,7 @@
                                             <rect key="frame" x="273" y="8.5" width="47" height="25"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="25" id="25A-1j-KRf"/>
+                                                <constraint firstAttribute="width" relation="lessThanOrEqual" constant="100" id="dWL-XD-HmG"/>
                                             </constraints>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
@@ -63,10 +64,10 @@
                                     </subviews>
                                     <constraints>
                                         <constraint firstItem="MET-3o-bde" firstAttribute="centerY" secondItem="Q1x-gL-ir0" secondAttribute="centerY" id="2lM-S8-gZe"/>
-                                        <constraint firstItem="0nB-BS-hxW" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="VhV-lC-Yjm" secondAttribute="trailing" constant="8" symbolic="YES" id="Cvi-lo-ze2"/>
                                         <constraint firstItem="VhV-lC-Yjm" firstAttribute="centerY" secondItem="Q1x-gL-ir0" secondAttribute="centerY" id="GeO-1l-0PH"/>
                                         <constraint firstItem="PUH-ke-h1X" firstAttribute="centerY" secondItem="Q1x-gL-ir0" secondAttribute="centerY" id="IAd-r4-H23"/>
                                         <constraint firstItem="VhV-lC-Yjm" firstAttribute="leading" secondItem="Q1x-gL-ir0" secondAttribute="leadingMargin" constant="2" id="WTC-Ag-1iA"/>
+                                        <constraint firstItem="0nB-BS-hxW" firstAttribute="leading" relation="lessThanOrEqual" secondItem="VhV-lC-Yjm" secondAttribute="trailing" constant="177" id="We7-kr-SbR"/>
                                         <constraint firstItem="PUH-ke-h1X" firstAttribute="leading" secondItem="0nB-BS-hxW" secondAttribute="trailing" constant="20" id="f8q-nT-pi3"/>
                                         <constraint firstItem="0nB-BS-hxW" firstAttribute="centerY" secondItem="Q1x-gL-ir0" secondAttribute="centerY" id="hqX-ez-pjK"/>
                                         <constraint firstItem="MET-3o-bde" firstAttribute="leading" secondItem="PUH-ke-h1X" secondAttribute="trailing" constant="1" id="rqS-Cy-vNb"/>
