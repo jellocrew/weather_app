@@ -149,8 +149,11 @@ class DetailedVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "DailyTableViewCell", for: indexPath) as? DailyTableViewCell else { return UITableViewCell()}
-        
         cell.configurate(with: dailyModelWeather[indexPath.row])
+        if indexPath.row == 0{
+            cell.dateLabel.text = "Сегодня"
+        }
+        
         return cell
     }
 }

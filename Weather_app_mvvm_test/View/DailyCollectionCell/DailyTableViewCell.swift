@@ -19,7 +19,8 @@ class DailyTableViewCell: UITableViewCell {
     }
     
     func configurate(with weather: Daily) {
-        
+        self.dateLabel.textAlignment = .left
+        self.tempLabel.textAlignment = .right
         self.dateLabel.text = getDayForDate(Date(timeIntervalSince1970: Double(weather.dt)))
         self.tempLabel.text = "\(Int(weather.temp.day))º"
         
@@ -33,7 +34,7 @@ class DailyTableViewCell: UITableViewCell {
             return ""
         }
         let formatter = DateFormatter()
-        formatter.dateFormat = "EEEE" //day of Week
+        formatter.dateFormat = "EEEE, d MMM" //day of Week
         return formatter.string(from: inputDate)
     }
 }
