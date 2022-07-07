@@ -26,23 +26,24 @@ struct WeatherMain {
         return String(speed)
     }
     var deg: Int = 0
+    var dtTxt: String = ""
+    var dt: Int = 0
+    var hourly = [Current]()
+    var daily = [Daily]()
     
-    init?(weatherData: WeatherData ) {
+   init?(weatherData: WeatherData) {
         
-        temp = weatherData.main.temp
-        feelsLike = weatherData.main.feelsLike
-        tempMin = weatherData.main.tempMin
-        tempMax = weatherData.main.tempMax
-        pressure = weatherData.main.pressure
-        humidity = weatherData.main.humidity
-        main = weatherData.weather.first?.main ?? "0"
-        weatherDescription = weatherData.weather.first?.weatherDescription ?? "0"
-        icon = weatherData.weather.first?.icon ?? "0"
-        speed = weatherData.wind.speed
-        deg = weatherData.wind.deg
+        temp = weatherData.current.temp
+        feelsLike = weatherData.current.feelsLike
+        pressure = weatherData.current.pressure
+        humidity = weatherData.current.humidity
+        weatherDescription = weatherData.current.weather.first?.weatherDescription ?? "0"
+        icon = weatherData.current.weather.first?.icon ?? "0"
+        hourly = weatherData.hourly
+        daily = weatherData.daily
+
     }
     
     init(){
     }
-    
 }
