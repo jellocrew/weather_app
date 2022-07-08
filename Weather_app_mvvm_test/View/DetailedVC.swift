@@ -153,7 +153,6 @@ class DetailedVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         if indexPath.row == 0{
             cell.dateLabel.text = "Сегодня"
         }
-        
         return cell
     }
 }
@@ -171,21 +170,10 @@ extension DetailedVC: UICollectionViewDelegateFlowLayout, UICollectionViewDataSo
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let hourCell = collectionView.dequeueReusableCell(withReuseIdentifier: "HourlyTableViewCell", for: indexPath) as? HourlyTableViewCell else {return UICollectionViewCell()}
         hourCell.configurate(with: hourlyModelWeather[indexPath.row])
-        return hourCell
-    }
-}
-
-extension UIImageView {
-    func loadImage(withUrl url: URL) {
-        DispatchQueue.global().async { [weak self] in
-            if let imageData = try? Data(contentsOf: url) {
-                if let image = UIImage(data: imageData) {
-                    DispatchQueue.main.async {
-                        self?.image = image
-                    }
-                }
-            }
+        if indexPath.row == 0{
+            hourCell.timeLabel.text = "Сейчас"
         }
+        return hourCell
     }
 }
 
