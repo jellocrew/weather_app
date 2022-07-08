@@ -11,7 +11,6 @@ class MainListCell: UITableViewCell {
         self.nameCityLabel.text = weather.name
         self.tempCityLabel.text = weather.temperatureString
         self.statusCityLabel.text = weather.weatherDescription
-
     }
     
 }
