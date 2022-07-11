@@ -14,7 +14,7 @@ class AddCityVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
     private let searchResultsTable: UITableView = {
         let table = UITableView()
         table.register(UITableViewCell.self,
-                       forCellReuseIdentifier: "cell")
+                       forCellReuseIdentifier: "CitySearchTableViewCell")
         table.translatesAutoresizingMaskIntoConstraints = false
         return table
     }()
@@ -36,6 +36,7 @@ class AddCityVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
         searchResultsTable.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20.0).isActive = true
         searchResultsTable.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 10.0).isActive = true
         
+        searchResultsTable.register(CitySearchTableViewCell.nib(), forCellReuseIdentifier: CitySearchTableViewCell.identifier)
         searchCompleter.delegate = self
         searchBar.delegate = self
         searchResultsTable.delegate = self
@@ -62,6 +63,7 @@ class AddCityVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+<<<<<<< HEAD
      
         let searchResult = searchResults[indexPath.row]
         
@@ -70,6 +72,11 @@ class AddCityVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
         cell.backgroundColor = .secondarySystemBackground
         cell.textLabel?.text = searchResult.title
         cell.detailTextLabel?.text = searchResult.subtitle
+=======
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "CitySearchTableViewCell", for: indexPath) as? CitySearchTableViewCell else { return UITableViewCell()}
+        let searchResult = searchResults[indexPath.row]
+        cell.configurate(with: searchResult)
+>>>>>>> develop
         return cell
     }
     
