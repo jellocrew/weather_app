@@ -23,7 +23,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Subtitle" textAlignment="natural" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xAe-KR-yPu">
-                        <rect key="frame" x="0.0" y="42.5" width="300" height="37.5"/>
+                        <rect key="frame" x="5" y="42.5" width="290" height="37.5"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
@@ -31,14 +31,14 @@
                 </subviews>
                 <constraints>
                     <constraint firstItem="8dh-zh-N7s" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="6oK-NT-fPH"/>
-                    <constraint firstItem="xAe-KR-yPu" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="G5M-rC-Wuc"/>
+                    <constraint firstItem="xAe-KR-yPu" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="5" id="G5M-rC-Wuc"/>
                     <constraint firstItem="xAe-KR-yPu" firstAttribute="top" secondItem="8dh-zh-N7s" secondAttribute="bottom" id="H8J-5v-B5H"/>
                     <constraint firstAttribute="bottom" secondItem="xAe-KR-yPu" secondAttribute="bottom" id="XKx-mK-ruq"/>
                     <constraint firstItem="8dh-zh-N7s" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="XtJ-bS-Ula"/>
                     <constraint firstItem="xAe-KR-yPu" firstAttribute="top" secondItem="8dh-zh-N7s" secondAttribute="bottom" id="Y1I-xw-HR4"/>
                     <constraint firstAttribute="trailing" secondItem="8dh-zh-N7s" secondAttribute="trailing" id="ZFK-bx-0ye"/>
                     <constraint firstItem="xAe-KR-yPu" firstAttribute="height" secondItem="8dh-zh-N7s" secondAttribute="height" id="gLd-dA-EPv"/>
-                    <constraint firstAttribute="trailing" secondItem="xAe-KR-yPu" secondAttribute="trailing" id="kQ1-ef-4bs"/>
+                    <constraint firstAttribute="trailing" secondItem="xAe-KR-yPu" secondAttribute="trailing" constant="5" id="kQ1-ef-4bs"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>

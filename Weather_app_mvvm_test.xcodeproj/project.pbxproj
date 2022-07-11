@@ -14,13 +14,10 @@
 		B63F33CA2870CCC000D49A50 /* DailyTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B63F33C82870CCC000D49A50 /* DailyTableViewCell.xib */; };
 		B678C24B2848AB2A00ED3975 /* AddCityVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B678C24A2848AB2A00ED3975 /* AddCityVC.swift */; };
 		B685FC882849453400CE7B71 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B685FC872849453400CE7B71 /* LocationManager.swift */; };
-<<<<<<< HEAD
 		B69596C428743DB20031937D /* WeatherDaily.swift in Sources */ = {isa = PBXBuildFile; fileRef = B69596C328743DB20031937D /* WeatherDaily.swift */; };
 		B6AC315A28780DA50029C783 /* UIImageView+Extention.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6AC315928780DA50029C783 /* UIImageView+Extention.swift */; };
-=======
 		B6AC315C28781ECC0029C783 /* CitySearchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6AC315B28781ECC0029C783 /* CitySearchTableViewCell.swift */; };
 		B6AC316028783C310029C783 /* CitySearchTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B6AC315E28783C310029C783 /* CitySearchTableViewCell.xib */; };
->>>>>>> develop
 		B6BD56F32865037E004A80E4 /* CitiesStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6BD56F22865037E004A80E4 /* CitiesStore.swift */; };
 		B6C362E5283968100002976C /* MainTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6C362E4283968100002976C /* MainTableVC.swift */; };
 		B6C362E9283971470002976C /* MainListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6C362E8283971470002976C /* MainListCell.swift */; };
@@ -51,13 +48,10 @@
 		B63F33C82870CCC000D49A50 /* DailyTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DailyTableViewCell.xib; sourceTree = "<group>"; };
 		B678C24A2848AB2A00ED3975 /* AddCityVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCityVC.swift; sourceTree = "<group>"; };
 		B685FC872849453400CE7B71 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
-<<<<<<< HEAD
 		B69596C328743DB20031937D /* WeatherDaily.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherDaily.swift; sourceTree = "<group>"; };
 		B6AC315928780DA50029C783 /* UIImageView+Extention.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Extention.swift"; sourceTree = "<group>"; };
-=======
 		B6AC315B28781ECC0029C783 /* CitySearchTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CitySearchTableViewCell.swift; sourceTree = "<group>"; };
 		B6AC315E28783C310029C783 /* CitySearchTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CitySearchTableViewCell.xib; sourceTree = "<group>"; };
->>>>>>> develop
 		B6BD56F22865037E004A80E4 /* CitiesStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CitiesStore.swift; sourceTree = "<group>"; };
 		B6C362E4283968100002976C /* MainTableVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTableVC.swift; sourceTree = "<group>"; };
 		B6C362E8283971470002976C /* MainListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainListCell.swift; sourceTree = "<group>"; };
@@ -286,13 +280,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-<<<<<<< HEAD
 				B63F33CA2870CCC000D49A50 /* DailyTableViewCell.xib in Resources */,
-=======
-				B61C98B02868757300374ABF /* night.png in Resources */,
-				B61C98AE2868757300374ABF /* day.png in Resources */,
+
 				B6AC316028783C310029C783 /* CitySearchTableViewCell.xib in Resources */,
->>>>>>> develop
+
 				B6C5B1DF2838390500583B6B /* LaunchScreen.storyboard in Resources */,
 				B6E9A07D28776EE600A0FE6F /* night.jpg in Resources */,
 				B6C5B1DC2838390500583B6B /* Assets.xcassets in Resources */,
@@ -311,12 +302,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				B6BD56F32865037E004A80E4 /* CitiesStore.swift in Sources */,
-<<<<<<< HEAD
+
 				B6AC315A28780DA50029C783 /* UIImageView+Extention.swift in Sources */,
-=======
+
 				B6C362EB283973F20002976C /* Weather.swift in Sources */,
 				B6AC315C28781ECC0029C783 /* CitySearchTableViewCell.swift in Sources */,
->>>>>>> develop
+
 				B6C362F128397A980002976C /* GetCityWeather.swift in Sources */,
 				B6C5B1EF28383C2A00583B6B /* Constants.swift in Sources */,
 				B678C24B2848AB2A00ED3975 /* AddCityVC.swift in Sources */,
