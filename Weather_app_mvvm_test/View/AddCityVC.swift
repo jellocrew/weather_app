@@ -63,6 +63,7 @@ class AddCityVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "CitySearchTableViewCell", for: indexPath) as? CitySearchTableViewCell else { return UITableViewCell()}
         let searchResult = searchResults[indexPath.row]
         cell.configurate(with: searchResult)

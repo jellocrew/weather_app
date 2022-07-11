@@ -12,6 +12,7 @@ class MainTableVC: UITableViewController, CLLocationManagerDelegate {
     let emptyCity = WeatherMain()
     var citiesArray = [WeatherMain]()
     var listCitiesArray: [String] = []
+    
     let locationManager = CLLocationManager()
     let partsOfDay = GetPartOfDay()
     
@@ -91,13 +92,13 @@ class MainTableVC: UITableViewController, CLLocationManagerDelegate {
         cell.nameCityLabel.textColor = textColor
         cell.statusCityLabel.textColor = textColor
         cell.tempCityLabel.textColor = textColor
-        cell.tempLabelCityLabel.textColor = textColor
         return cell
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let indexPath = tableView.indexPathForSelectedRow else { return }
         let cityWeather = citiesArray[indexPath.row]
+//        print("cityWeather: \(cityWeather)")
         guard let controller = self.storyboard?.instantiateViewController(withIdentifier: "DetailedVC") as? DetailedVC else { return }
         self.navigationController?.pushViewController(controller, animated: true)
         controller.weatherModel = cityWeather
