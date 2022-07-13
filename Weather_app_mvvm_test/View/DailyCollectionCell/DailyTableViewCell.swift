@@ -9,6 +9,9 @@ class DailyTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         backgroundColor = .white
+        
+        dateLabel.textColor = .black.withAlphaComponent(0.8)
+        tempLabel.textColor = .black
         icon.contentMode = .scaleAspectFit
     }
     
@@ -21,7 +24,7 @@ class DailyTableViewCell: UITableViewCell {
     func configurate(with weather: Daily) {
         self.dateLabel.textAlignment = .left
         self.tempLabel.textAlignment = .right
-        self.dateLabel.text = getDayForDate(Date(timeIntervalSince1970: Double(weather.dt)))
+        self.dateLabel.text = convertDayData(Date(timeIntervalSince1970: Double(weather.dt)), "EEEE, d MMM")
         self.tempLabel.text = "\(Int(weather.temp.day))º"
         
         let weatherIconsId = weather.weather.first?.icon
@@ -29,12 +32,12 @@ class DailyTableViewCell: UITableViewCell {
         self.icon.loadImage(withUrl: pngURL)
     }
     
-    func getDayForDate(_ date: Date?) -> String {
+    func convertDayData(_ date: Date?, _ format: String) -> String {
         guard let inputDate = date else {
             return ""
         }
         let formatter = DateFormatter()
-        formatter.dateFormat = "EEEE, d MMM" //day of Week
+        formatter.dateFormat = format //day of Week
         return formatter.string(from: inputDate)
     }
 }
