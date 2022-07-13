@@ -9,7 +9,7 @@ class HourlyTableViewCell: UICollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        timeLabel.textColor = .black.withAlphaComponent(0.8)
+        timeLabel.textColor = .white.withAlphaComponent(0.8)
         weatherLabel.textColor = .white
         timeLabel.font = UIFont(name: "Helvetica", size: timeLabel.frame.width / 7)
         weatherLabel.font = UIFont(name: "Helvetica", size: weatherLabel.frame.height / 1.5)
@@ -24,23 +24,21 @@ class HourlyTableViewCell: UICollectionViewCell {
     
     func configurate(with hourWeather: Current){
         
-        timeLabel.text = convertDayData(Date(timeIntervalSince1970: Double(hourWeather.dt)))
+        timeLabel.text = convertDayData(Date(timeIntervalSince1970: Double(hourWeather.dt)), "HH:mm")
         weatherLabel.text = "\(Int(hourWeather.temp))º"
         let weatherIconsId = hourWeather.weather.first?.icon
         guard let pngURL = URL(string: "http://openweathermap.org/img/wn/\(weatherIconsId ?? "01d" )@2x.png" ) else { return }
         self.weatherImage.loadImage(withUrl: pngURL)
         
     }
-    
-    func convertDayData(_ date: Date?) -> String {
+ 
+    func convertDayData(_ date: Date?, _ format: String) -> String {
         guard let inputDate = date else {
             return ""
         }
         let formatter = DateFormatter()
-        formatter.dateFormat = "HH:mm"
+        formatter.dateFormat = format //day of Week
         return formatter.string(from: inputDate)
     }
-    
-    
 }
 

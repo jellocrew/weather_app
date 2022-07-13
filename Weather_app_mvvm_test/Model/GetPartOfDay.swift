@@ -44,5 +44,4 @@ class GetPartOfDay {
             textColor = .white.withAlphaComponent(0.7)
         }
     }
-    
 }
