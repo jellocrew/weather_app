@@ -1,6 +1,6 @@
 import UIKit
 
-class ListCell: UITableViewCell {
+class MainListCell: UITableViewCell {
     
     @IBOutlet weak var nameCityLabel: UILabel!
     @IBOutlet weak var statusCityLabel: UILabel!
@@ -8,8 +8,7 @@ class ListCell: UITableViewCell {
     
     func configurate(weather: WeatherMain) {
         self.nameCityLabel.text = weather.name
-        self.tempCityLabel.text = weather.temperatureString
+        self.tempCityLabel.text = "\(weather.temperatureString)º"
         self.statusCityLabel.text = weather.weatherDescription
     }
-    
 }
