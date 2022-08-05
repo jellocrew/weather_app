@@ -1,4 +1,3 @@
-WeatherApp
 WeatherApp is a simple weather app, that provides current weather information for cities. WeatherApp uses the OpenWeatherMap api to download weather data.
 
 With WeatherApp you can:
